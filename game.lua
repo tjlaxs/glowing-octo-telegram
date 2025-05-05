@@ -24,9 +24,13 @@ function Game:update(dt)
   self.y = self.y + 10 * dt
 end
 
+function Game:entityDraw(char, x, y)
+  love.graphics.print(char, x * self.char_width, y * self.char_height)
+end
+
 function Game:draw()
   love.graphics.setFont(self.font)
-  love.graphics.print("@", self.player.x * self.char_width, self.player.y * self.char_height)
+  self:entityDraw("@", self.player.x, self.player.y)
 end
 
 return Game
