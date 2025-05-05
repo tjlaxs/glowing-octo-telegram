@@ -29,8 +29,23 @@ function Game:entityDraw(char, x, y)
 end
 
 function Game:draw()
-  love.graphics.setFont(self.font)
   self:entityDraw("@", self.player.x, self.player.y)
+end
+
+function Game:playerLeft()
+  self.player.x = self.player.x - 1
+end
+
+function Game:playerRight()
+  self.player.x = self.player.x + 1
+end
+
+function Game:playerUp()
+  self.player.y = self.player.y - 1
+end
+
+function Game:playerDown()
+  self.player.y = self.player.y + 1
 end
 
 return Game

@@ -12,6 +12,14 @@ function love.keypressed(key, scancode, isrepeat)
     g:toggleFullscreen()
   elseif key == "escape" then
     love.event.quit()
+  elseif key == "h" then
+    g:playerLeft()
+  elseif key == "l" then
+    g:playerRight()
+  elseif key == "j" then
+    g:playerDown()
+  elseif key == "k" then
+    g:playerUp()
   end
 end
 
