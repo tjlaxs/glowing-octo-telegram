@@ -15,7 +15,13 @@ function Game:toggleFullscreen()
   love.window.setFullscreen(self.fullscreen, "exclusive")
 end
 
+function Game:update()
+  self.x = self.x + 1
+  self.y = self.y + 1
+end
+
 function love.load()
+  ---@diagnostic disable-next-line: lowercase-global
   g = Game:new()
   love.window.setFullscreen(g.fullscreen, "desktop")
 end
@@ -29,6 +35,7 @@ function love.keypressed(key, scancode, isrepeat)
 end
 
 function love.update(dt)
+  g:update()
 end
 
 function love.draw()
