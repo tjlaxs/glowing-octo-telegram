@@ -1,0 +1,21 @@
+{
+  "workspace": {
+    "userThirdParty": [
+      "/home/tjalxs/.local/share/LuaAddons"
+      ],
+      "checkThirdParty": true
+  },
+  "workspace.library": [
+    "/usr/share/nvim/runtime/lua",
+    "/home/tjalxs/.local/share/LuaAddons/love2d/library",
+    "/home/tjalxs/.local/share/nvim/lazy/ui/nvchad_types",
+    "/home/tjalxs/.local/share/nvim/lazy/lazy.nvim/lua/lazy",
+    "${3rd}/luv/library",
+    "${3rd}/luassert/library",
+    "${3rd}/love2d/library"
+    ],
+    "runtime.version": "LuaJIT",
+    "runtime.special": {
+      "love.filesystem.load": "loadfile"
+    }
+}
