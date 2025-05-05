@@ -22,4 +22,5 @@ end
 function love.draw()
   love.graphics.setFont(g.font)
   love.graphics.print('w:' .. g.char_width .. ', h: ' .. g.char_height, g.x, g.y)
+  g:draw()
 end
