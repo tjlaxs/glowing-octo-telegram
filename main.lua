@@ -1,13 +1,11 @@
-Game = { fullscreen = false, x = 0, y = 0 }
+Object = require("classic.classic")
+Game = Object:extend()
 
-function Game:new(o, x, y, fullscreen)
-  o = o or {}
-  setmetatable(o, self)
-  self.__index = self
+function Game:new(x, y, fullscreen)
+  Game.super.new(self)
   self.fullscreen = fullscreen or false
   self.x = x or 0
   self.y = y or 0
-  return o
 end
 
 function Game:toggleFullscreen()
@@ -15,17 +13,18 @@ function Game:toggleFullscreen()
   love.window.setFullscreen(self.fullscreen, "exclusive")
 end
 
-function Game:update()
-  self.x = self.x + 1
-  self.y = self.y + 1
+function Game:update(dt)
+  self.x = self.x + 10 * dt
+  self.y = self.y + 10 * dt
 end
 
 function love.load()
   ---@diagnostic disable-next-line: lowercase-global
-  g = Game:new()
+  g = Game()
   love.window.setFullscreen(g.fullscreen, "desktop")
 end
 
+---@diagnostic disable-next-line: unused-local
 function love.keypressed(key, scancode, isrepeat)
   if key == "f11" then
     g:toggleFullscreen()
@@ -35,7 +34,7 @@ function love.keypressed(key, scancode, isrepeat)
 end
 
 function love.update(dt)
-  g:update()
+  g:update(dt)
 end
 
 function love.draw()
