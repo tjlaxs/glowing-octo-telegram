@@ -1,11 +1,14 @@
 Object = require("classic.classic")
 Game = Object:extend()
 
-function Game:new(x, y, fullscreen)
+function Game:new(font)
   Game.super.new(self)
-  self.fullscreen = fullscreen or false
-  self.x = x or 0
-  self.y = y or 0
+  self.fullscreen = false
+  self.x = 0
+  self.y = 0
+  self.font = font
+  self.char_width = font:getWidth("x")
+  self.char_height = font:getHeight("x")
 end
 
 function Game:toggleFullscreen()

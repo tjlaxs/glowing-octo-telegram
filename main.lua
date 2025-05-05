@@ -1,10 +1,9 @@
 function love.load()
   Game = require("game")
   ---@diagnostic disable-next-line: lowercase-global
-  g = Game()
+  g = Game(love.graphics.newFont("assets/FiraMono-Medium.ttf", 16))
   love.window.setFullscreen(g.fullscreen, "desktop")
   ---@diagnostic disable-next-line: lowercase-global
-  font = love.graphics.newFont("assets/FiraMono-Medium.ttf", 16)
 end
 
 ---@diagnostic disable-next-line: unused-local
@@ -21,6 +20,6 @@ function love.update(dt)
 end
 
 function love.draw()
-  love.graphics.setFont(font)
-  love.graphics.print('Hello World', g.x, g.y)
+  love.graphics.setFont(g.font)
+  love.graphics.print('w:' .. g.char_width .. ', h: ' .. g.char_height, g.x, g.y)
 end
