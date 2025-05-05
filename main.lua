@@ -10,6 +10,11 @@ function Game:new(o, x, y, fullscreen)
   return o
 end
 
+function Game:toggleFullscreen()
+  self.fullscreen = not self.fullscreen
+  love.window.setFullscreen(self.fullscreen, "exclusive")
+end
+
 function love.load()
   g = Game:new()
   love.window.setFullscreen(g.fullscreen, "desktop")
@@ -17,8 +22,7 @@ end
 
 function love.keypressed(key, scancode, isrepeat)
   if key == "f11" then
-    g.fullscreen = not g.fullscreen
-    love.window.setFullscreen(g.fullscreen, "exclusive")
+    g:toggleFullscreen()
   elseif key == "escape" then
     love.event.quit()
   end
