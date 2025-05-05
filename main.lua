@@ -1,12 +1,13 @@
+FULLSCREEN = true
+
 function love.load()
-  love.window.setFullscreen(true, "desktop")
+  love.window.setFullscreen(FULLSCREEN, "desktop")
 end
 
 function love.keypressed(key, scancode, isrepeat)
   if key == "f11" then
-    love.window.setFullscreen(true, "exclusive")
-  elseif key == "f12" then
-    love.window.setFullscreen(false)
+    FULLSCREEN = not FULLSCREEN
+    love.window.setFullscreen(FULLSCREEN, "exclusive")
   elseif key == "escape" then
     love.event.quit()
   end
