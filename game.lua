@@ -11,7 +11,7 @@ function Game:new(font)
   self.y = 0
   self.font = font
   self.player = Player(10, 10)
-
+  self.actions = {}
   local char_width = font:getWidth("x")
   local char_height = font:getHeight("x")
   Grid.init(char_width, char_height)
@@ -27,6 +27,24 @@ function Game:update(dt)
   self.y = self.y + 10 * dt
 end
 
+function Game:actionAdd(act)
+  table.insert(self.actions, act)
+end
+
+function Game:actionExecute()
+  if table.maxn(self.actions) > 0 then
+    -- TODO: fix ineficient pop
+    local act = table.remove(self.actions, 1)
+
+    if act:is(EscapeAction) then
+      love.event.quit()
+    elseif act:is(MovementAction) then
+      self.player.x = self.player.x + act.offset_x
+      self.player.y = self.player.y + act.offset_y
+    end
+  end
+end
+
 function Game:entityDraw(char, x, y)
   local px, py = Grid.toWorld(x, y)
   love.graphics.print(char, px, py)
@@ -34,22 +52,6 @@ end
 
 function Game:draw()
   self:entityDraw("@", self.player.x, self.player.y)
-end
-
-function Game:playerLeft()
-  self.player.x = self.player.x - 1
-end
-
-function Game:playerRight()
-  self.player.x = self.player.x + 1
-end
-
-function Game:playerUp()
-  self.player.y = self.player.y - 1
-end
-
-function Game:playerDown()
-  self.player.y = self.player.y + 1
 end
 
 return Game
