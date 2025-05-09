@@ -2,7 +2,7 @@ Object = require("classic.classic")
 Grid = require("grid")
 Game = Object:extend()
 
-Player = require("player")
+Entity = require("entity")
 
 function Game:new(font)
   Game.super.new(self)
@@ -10,7 +10,8 @@ function Game:new(font)
   self.x = 0
   self.y = 0
   self.font = font
-  self.player = Player(10, 10)
+  self.player = Entity(10, 10, "@")
+  self.npc = Entity(15, 15, "d")
   self.actions = {}
   local char_width = font:getWidth("x")
   local char_height = font:getHeight("x")
@@ -39,19 +40,21 @@ function Game:actionExecute()
     if act:is(EscapeAction) then
       love.event.quit()
     elseif act:is(MovementAction) then
-      self.player.x = self.player.x + act.offset_x
-      self.player.y = self.player.y + act.offset_y
+      self.player:move(act.offset_x, act.offset_y)
     end
   end
 end
 
-function Game:entityDraw(char, x, y)
-  local px, py = Grid.toWorld(x, y)
-  love.graphics.print(char, px, py)
+function Game:entitiesDraw()
+  local px, py = Grid.toWorld(self.player.grid_position.x, self.player.grid_position.y)
+  love.graphics.print(self.player.face, px, py)
+
+  local nx, ny = Grid.toWorld(self.npc.grid_position.x, self.npc.grid_position.y)
+  love.graphics.print(self.npc.face, nx, ny)
 end
 
 function Game:draw()
-  self:entityDraw("@", self.player.x, self.player.y)
+  self:entitiesDraw()
 end
 
 return Game
