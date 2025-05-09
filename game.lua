@@ -1,4 +1,5 @@
 Object = require("classic.classic")
+Grid = require("grid")
 Game = Object:extend()
 
 Player = require("player")
@@ -9,9 +10,11 @@ function Game:new(font)
   self.x = 0
   self.y = 0
   self.font = font
-  self.char_width = font:getWidth("x")
-  self.char_height = font:getHeight("x")
   self.player = Player(10, 10)
+
+  local char_width = font:getWidth("x")
+  local char_height = font:getHeight("x")
+  Grid.init(char_width, char_height)
 end
 
 function Game:toggleFullscreen()
@@ -25,7 +28,8 @@ function Game:update(dt)
 end
 
 function Game:entityDraw(char, x, y)
-  love.graphics.print(char, x * self.char_width, y * self.char_height)
+  local px, py = Grid.toWorld(x, y)
+  love.graphics.print(char, px, py)
 end
 
 function Game:draw()
