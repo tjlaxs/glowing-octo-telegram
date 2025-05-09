@@ -46,11 +46,13 @@ function Game:actionExecute()
 end
 
 function Game:entitiesDraw()
+  local player_color = { 1, 1, 1, 1 }
   local px, py = Grid.toWorld(self.player.grid_position.x, self.player.grid_position.y)
-  love.graphics.print(self.player.face, px, py)
+  love.graphics.print({ player_color, self.player.face }, px, py)
 
+  local npc_color = { .45, 1, .45, 1 }
   local nx, ny = Grid.toWorld(self.npc.grid_position.x, self.npc.grid_position.y)
-  love.graphics.print(self.npc.face, nx, ny)
+  love.graphics.print({ npc_color, self.npc.face }, nx, ny)
 end
 
 function Game:draw()
