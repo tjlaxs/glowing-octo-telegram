@@ -5,9 +5,7 @@ local Game = Object:extend()
 local Entity = require("entity")
 local Map = require("map")
 local Point = require("point")
-
-local EscapeAction = require("EscapeAction")
-local MovementAction = require("MovementAction")
+local Action = require("action")
 
 function Game:new(w, h, font)
   Game.super.new(self)
@@ -43,9 +41,9 @@ function Game:actionExecute()
     -- TODO: fix ineficient pop
     local act = table.remove(self.actions, 1)
 
-    if act:is(EscapeAction) then
+    if act:is(Action.EscapeAction) then
       love.event.quit()
-    elseif act:is(MovementAction) then
+    elseif act:is(Action.MovementAction) then
       self.player:move(act.offset_x, act.offset_y)
     end
   end
