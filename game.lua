@@ -5,7 +5,6 @@ local Game = Object:extend()
 local Entity = require("entity")
 local Map = require("map")
 local Point = require("point")
-local Action = require("action")
 
 function Game:new(w, h, font)
   Game.super.new(self)
@@ -40,17 +39,7 @@ function Game:actionExecute()
   if table.maxn(self.actions) > 0 then
     -- TODO: fix ineficient pop
     local act = table.remove(self.actions, 1)
-
-    if act:is(Action.EscapeAction) then
-      love.event.quit()
-    elseif act:is(Action.MovementAction) then
-      local player = self.player
-      local new_point = Point(player.grid_position.x + act.offset_x, player.grid_position.y + act.offset_y)
-      local tile = self.map:getTile(new_point)
-      if tile and tile:isWalkable() then
-        self.player:move(act.offset_x, act.offset_y)
-      end
-    end
+    act:perform(self, self.player)
   end
 end
 
