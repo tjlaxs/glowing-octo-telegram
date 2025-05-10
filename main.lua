@@ -1,37 +1,37 @@
+local Game = require("game")
+local MovementAction = require("MovementAction")
+local EscapeAction = require("EscapeAction")
+
 function love.load()
-  Game = require("game")
-  ---@diagnostic disable-next-line: lowercase-global
-  g = Game(love.graphics.newFont("assets/FiraMono-Medium.ttf", 16))
-  love.window.setFullscreen(g.fullscreen, "desktop")
-  ---@diagnostic disable-next-line: lowercase-global
+  G = Game(40, 40, love.graphics.newFont("assets/FiraMono-Medium.ttf", 16))
+  love.window.setFullscreen(G.fullscreen, "desktop")
+  love.window.setTitle("Löve Roguelike")
 end
 
 ---@diagnostic disable-next-line: unused-local
 function love.keypressed(key, scancode, isrepeat)
-  MovementAction = require("MovementAction")
-  EscapeAction = require("EscapeAction")
   if key == "f11" then
-    g:toggleFullscreen()
+    G:toggleFullscreen()
   elseif key == "escape" then
-    g:actionAdd(EscapeAction())
+    G:actionAdd(EscapeAction())
   elseif key == "h" then
-    g:actionAdd(MovementAction(-1, 0))
+    G:actionAdd(MovementAction(-1, 0))
   elseif key == "l" then
-    g:actionAdd(MovementAction(1, 0))
+    G:actionAdd(MovementAction(1, 0))
   elseif key == "j" then
-    g:actionAdd(MovementAction(0, 1))
+    G:actionAdd(MovementAction(0, 1))
   elseif key == "k" then
-    g:actionAdd(MovementAction(0, -1))
+    G:actionAdd(MovementAction(0, -1))
   end
 end
 
 function love.update(dt)
-  g:update(dt)
-  g:actionExecute()
+  G:update(dt)
+  G:actionExecute()
 end
 
 function love.draw()
-  love.graphics.setFont(g.font)
-  love.graphics.print('Löve <3', g.x, g.y)
-  g:draw()
+  love.graphics.setFont(G.font)
+  love.graphics.print('Löve <3', G.x, G.y)
+  G:draw()
 end

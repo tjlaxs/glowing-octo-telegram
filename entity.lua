@@ -1,16 +1,18 @@
-Object = require("classic.classic")
-Entity = Object:extend()
+local Object = require("classic.classic")
+local Entity = Object:extend()
 
-function Entity:new(pos_x, pos_y, face)
-  self.grid_position = {}
-  self.grid_position.x = pos_x
-  self.grid_position.y = pos_y
+local Point = require("point")
+
+function Entity:new(point, face)
+  self.super.new(self)
+  self.grid_position = point
   self.face = face or "?"
 end
 
 function Entity:move(offset_x, offset_y)
-  self.grid_position.x = self.grid_position.x + offset_x
-  self.grid_position.y = self.grid_position.y + offset_y
+  local nx = self.grid_position.x + offset_x
+  local ny = self.grid_position.y + offset_y
+  self.grid_position = Point(nx, ny)
 end
 
 return Entity

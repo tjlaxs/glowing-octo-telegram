@@ -1,5 +1,5 @@
-Action = require("action")
-MovementAction = Action:extend()
+local Action = require("action")
+local MovementAction = Action:extend()
 
 function MovementAction:new(dx, dy)
   self.offset_x = dx
