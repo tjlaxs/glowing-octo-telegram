@@ -2,7 +2,7 @@ local Game = require("game")
 local Action = require("action")
 
 function love.load()
-  G = Game(40, 40, love.graphics.newFont("assets/FiraMono-Medium.ttf", 16))
+  G = Game(79, 30, love.graphics.newFont("assets/FiraMono-Medium.ttf", 16))
   love.window.setFullscreen(G.fullscreen, "desktop")
   love.window.setTitle("Löve Roguelike")
 end

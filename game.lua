@@ -60,6 +60,7 @@ function Game:entitiesDraw()
 end
 
 function Game:draw()
+  self.map:draw()
   self:entitiesDraw()
 end
 

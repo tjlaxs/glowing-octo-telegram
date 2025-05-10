@@ -33,6 +33,19 @@ function Map:inBounds(point)
   return 0 <= point.x <= self.width and 0 <= point.y <= self.height
 end
 
+function Map:draw()
+  for y = 0, self.height do
+    for x = 0, self.width do
+      local point = Point(x, y)
+      local grid_point = Grid.toWorld(point)
+      local tile = self:getTile(point)
+      if tile then
+        love.graphics.print({ tile.color_lit, tile.face }, grid_point.x, grid_point.y)
+      end
+    end
+  end
+end
+
 function Map:getTile(point)
   local tile_index = Grid.toIndex(self.width, point)
   if tile_index == -1 then
