@@ -44,7 +44,12 @@ function Game:actionExecute()
     if act:is(Action.EscapeAction) then
       love.event.quit()
     elseif act:is(Action.MovementAction) then
-      self.player:move(act.offset_x, act.offset_y)
+      local player = self.player
+      local new_point = Point(player.grid_position.x + act.offset_x, player.grid_position.y + act.offset_y)
+      local tile = self.map:getTile(new_point)
+      if tile and tile:isWalkable() then
+        self.player:move(act.offset_x, act.offset_y)
+      end
     end
   end
 end

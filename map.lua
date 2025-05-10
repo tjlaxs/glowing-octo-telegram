@@ -37,10 +37,10 @@ function Map:draw()
   for y = 0, self.height do
     for x = 0, self.width do
       local point = Point(x, y)
-      local grid_point = Grid.toWorld(point)
       local tile = self:getTile(point)
       if tile then
-        love.graphics.print({ tile.color_lit, tile.face }, grid_point.x, grid_point.y)
+        local world_point = Grid.toWorld(point)
+        love.graphics.print({ tile.color_lit, tile.face }, world_point.x, world_point.y)
       end
     end
   end

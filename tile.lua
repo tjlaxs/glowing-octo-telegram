@@ -15,8 +15,8 @@ function Tile:setType(type)
   self.face = type.face
   self.color_lit = c
   self.color_dark = { c[1], c[2], c[3], 0.6 }
-  self.is_walkable = true
-  self.is_transparent = true
+  self.is_walkable = type.is_walkable
+  self.is_transparent = type.is_transparent
 end
 
 function Tile:isWalkable()
