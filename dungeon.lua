@@ -45,7 +45,9 @@ function Dungeon:tunnelBetween(start, stop)
 end
 
 function Dungeon:tunnelVertical(x, y_start, y_end)
-  for y = y_start, y_end do
+  local y_min = math.min(y_start, y_end)
+  local y_max = math.max(y_start, y_end)
+  for y = y_min, y_max do
     local tile = self.map:getTile(Point(x, y))
     if tile then
       tile:setType(TileTypes.floor)
@@ -54,7 +56,9 @@ function Dungeon:tunnelVertical(x, y_start, y_end)
 end
 
 function Dungeon:tunnelHorizontal(y, x_start, x_end)
-  for x = x_start, x_end do
+  local x_min = math.min(x_start, x_end)
+  local x_max = math.max(x_start, x_end)
+  for x = x_min, x_max do
     local tile = self.map:getTile(Point(x, y))
     if tile then
       tile:setType(TileTypes.floor)
