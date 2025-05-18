@@ -14,28 +14,21 @@ function Map:new(width, height)
 end
 
 function Map:setupTiles()
-  for y = 0, self.height do
-    for x = 0, self.width do
-      local tile = Tile(Point(x, y), TileTypes.floor)
+  for y = 1, self.height do
+    for x = 1, self.width do
+      local tile = Tile(Point(x, y), TileTypes.wall)
       table.insert(self.tiles, tile)
-    end
-  end
-
-  for x = 30, 34 do
-    local tile = self:getTile(Point(x, 22))
-    if tile then
-      tile:setType(TileTypes.wall)
     end
   end
 end
 
 function Map:inBounds(point)
-  return 0 <= point.x <= self.width and 0 <= point.y <= self.height
+  return 1 <= point.x <= self.width and 1 <= point.y <= self.height
 end
 
 function Map:draw()
-  for y = 0, self.height do
-    for x = 0, self.width do
+  for y = 1, self.height do
+    for x = 1, self.width do
       local point = Point(x, y)
       local tile = self:getTile(point)
       if tile then

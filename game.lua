@@ -3,7 +3,7 @@ local Grid = require("grid")
 local Game = Object:extend()
 
 local Entity = require("entity")
-local Map = require("map")
+local Dungeon = require("dungeon")
 local Point = require("point")
 
 function Game:new(w, h, font)
@@ -12,10 +12,10 @@ function Game:new(w, h, font)
   self.x = 0
   self.y = 0
   self.font = font
-  self.player = Entity(Point(10, 10), "@")
-  self.npc = Entity(Point(15, 15), "d")
+  self.player = Entity(Point(21, 16), "@")
+  self.npc = Entity(Point(36, 16), "d")
   self.actions = {}
-  self.map = Map(w, h)
+  self.dungeon = Dungeon(w, h)
   local char_width = font:getWidth("x")
   local char_height = font:getHeight("x")
   Grid.init(char_width, char_height)
@@ -54,7 +54,7 @@ function Game:entitiesDraw()
 end
 
 function Game:draw()
-  self.map:draw()
+  self.dungeon:draw()
   self:entitiesDraw()
 end
 

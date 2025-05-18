@@ -19,9 +19,9 @@ function MovementAction:new(dx, dy)
 end
 
 function MovementAction:perform(game, entity)
-  local new_point = Point(entity.grid_position.x + self.offset_x, entity.grid_position.y + self.offset_y)
-  local tile = game.map:getTile(new_point)
-  if tile and tile:isWalkable() then
+  local next_point = Point(entity.grid_position.x + self.offset_x, entity.grid_position.y + self.offset_y)
+  local tile = game.dungeon:getTile(next_point)
+  if tile ~= nil and tile:isWalkable() then
     entity:move(self.offset_x, self.offset_y)
   end
 end

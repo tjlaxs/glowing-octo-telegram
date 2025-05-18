@@ -11,11 +11,11 @@ Grid.init = function(w, h)
 end
 
 Grid.toWorld = function(grid_point)
-  return Point(grid_point.x * Grid.tile_width, grid_point.y * Grid.tile_height)
+  return Point((grid_point.x - 1) * Grid.tile_width, (grid_point.y - 1) * Grid.tile_height)
 end
 
 Grid.into = function(world_point)
-  return Point(world_point.x / Grid.tile_width, world_point.y / Grid.tile_height)
+  return Point(world_point.x / Grid.tile_width + 1, world_point.y / Grid.tile_height + 1)
 end
 
 Grid.toIndex = function(map_width, point)
