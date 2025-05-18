@@ -2,6 +2,7 @@ local Game = require("game")
 local Action = require("action")
 
 function love.load()
+  math.randomseed(os.time())
   G = Game(79, 32, love.graphics.newFont("assets/FiraMono-Medium.ttf", 16))
   love.window.setFullscreen(G.fullscreen, "desktop")
   love.window.setTitle("Löve Roguelike")

@@ -17,6 +17,20 @@ function Room:center()
   return Point(center_x, center_y)
 end
 
+function Room:grow(size)
+  self.x1 = self.x1 - size
+  self.y1 = self.y1 - size
+  self.x2 = self.x2 + size
+  self.y2 = self.y2 + size
+  return self
+end
+
+function Room:intersects(room)
+  local intersects_x = self.x1 < room.x2 and self.x2 > room.x1
+  local intersects_y = self.y1 < room.y2 and self.y2 > room.y1
+  return intersects_x and intersects_y
+end
+
 function Room:inner()
   local inner = {}
   for y = self.y1 + 1, self.y2 do

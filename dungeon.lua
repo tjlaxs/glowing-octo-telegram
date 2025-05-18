@@ -1,32 +1,56 @@
 local Object = require("classic.classic")
 local Dungeon = Object:extend()
 
+local Grid = require("grid")
 local Map = require("map")
 local TileTypes = require("tiletypes")
 local Room = require("room")
 local Point = require("point")
+local Entity = require("entity")
 
 function Dungeon:new(w, h)
   self.super.new(self)
   self.map = nil
-  Dungeon:generate(w, h)
+  self.max_rooms = 5
+  self.room_min_size = 5
+  self.room_max_size = 10
+  self.player = Entity(Point(21, 16), "@")
+  self.npc = Entity(Point(36, 16), "d")
+  self:generate(w, h)
 end
 
 function Dungeon:generate(map_width, map_height)
   self.map = Map(map_width, map_height)
+  local rooms = {}
 
-  local room1 = Room(20, 15, 10, 10)
-  local room2 = Room(35, 15, 10, 10)
-  self:tunnelBetween(room1:center(), room2:center())
-
-  for _, v in ipairs(room1:inner()) do
-    local tile = self.map:getTile(v)
-    if tile then
-      tile:setType(TileTypes.floor)
+  for _ = 1, self.max_rooms do
+    local room_width = math.random(self.room_min_size, self.room_max_size)
+    local room_height = math.random(self.room_min_size, self.room_max_size)
+    local x = math.random(1, self.map.width - room_width - 1)
+    local y = math.random(1, self.map.height - room_height - 1)
+    local room = Room(x, y, room_width, room_height)
+    local has_intersections = false
+    for _, r in ipairs(rooms) do
+      if r:intersects(room:grow(-1)) then
+        has_intersections = true
+        break
+      end
+    end
+    if not has_intersections then
+      self:carveRoom(room)
+      if #rooms == 0 then
+        self.player.grid_position = room:center()
+      else
+        self:tunnelBetween(rooms[table.maxn(rooms)]:center(), room:center())
+      end
+      print("Room ", room.x1, room.y1, room.x2, room.y2)
+      table.insert(rooms, room)
     end
   end
+end
 
-  for _, v in ipairs(room2:inner()) do
+function Dungeon:carveRoom(room)
+  for _, v in ipairs(room:inner()) do
     local tile = self.map:getTile(v)
     if tile then
       tile:setType(TileTypes.floor)
@@ -72,6 +96,17 @@ end
 
 function Dungeon:draw()
   self.map:draw()
+  self:entitiesDraw()
+end
+
+function Dungeon:entitiesDraw()
+  local player_color = { 1, 1, 1, 1 }
+  local p = Grid.toWorld(self.player.grid_position)
+  love.graphics.print({ player_color, self.player.face }, p.x, p.y)
+
+  local npc_color = { .45, 1, .45, 1 }
+  local n = Grid.toWorld(self.npc.grid_position)
+  love.graphics.print({ npc_color, self.npc.face }, n.x, n.y)
 end
 
 return Dungeon
