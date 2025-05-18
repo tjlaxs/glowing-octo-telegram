@@ -13,7 +13,7 @@ end
 
 function Room:center()
   local center_x = math.floor((self.x1 + self.x2) / 2)
-  local center_y = math.floor((self.x1 + self.x2) / 2)
+  local center_y = math.floor((self.y1 + self.y2) / 2)
   return Point(center_x, center_y)
 end
 
