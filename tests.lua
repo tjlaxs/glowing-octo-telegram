@@ -1,5 +1,19 @@
 local T = require("test")
 
+------------------------------------------------------ Point
+local Point = require("point")
+
+T.it('creates empty point', function()
+  local p = Point()
+  return T.expect(T.Table({ p.x, p.y }), T.Table({ 0, 0 }))
+end)
+
+T.it('creates point', function()
+  local p = Point(1, 2)
+  return T.expect(T.Table({ p.x, p.y }), T.Table({ 1, 2 }))
+end)
+
+------------------------------------------------------ Room
 local Room = require("room")
 
 T.it('creates room', function()
@@ -22,6 +36,65 @@ T.it('finds cells inside of walls', function()
     table.insert(list, p.y)
   end
   return T.expect(T.Table(list), T.Table({ 2, 2, 3, 2, 4, 2, 2, 3, 3, 3, 4, 3, 2, 4, 3, 4, 4, 4 }))
+end)
+
+------------------------------------------------------ Grid
+local Grid = require("grid")
+
+T.it('changes from grid point to world point', function()
+  local gp = Point(10, 10)
+  local wp = Grid.toWorld(gp)
+  return T.expect(T.Table({ wp.x, wp.y }), T.Table({ 144, 144 }))
+end)
+
+T.it('changes from world point to grid point', function()
+  local wp = Point(144, 144)
+  local gp = Grid.into(wp)
+  return T.expect(T.Table({ gp.x, gp.y }), T.Table({ 10, 10 }))
+end)
+
+T.it('gets grid index for a point', function()
+  local map_width = 10
+  local p = Point(2, 3)
+  local index = Grid.toIndex(map_width, p)
+  return T.expect(index, 32)
+end)
+
+------------------------------------------------------ Entity
+local Entity = require("entity")
+
+T.it('creates entity', function()
+  local p = Point(3, 5)
+  local e = Entity(p, "@")
+  return T.expect(T.Table({ e.grid_position.x, e.grid_position.y }), T.Table({ 3, 5 }))
+end)
+
+T.it('creates entity and moves it east', function()
+  local p = Point(3, 5)
+  local e = Entity(p, "@")
+  e:move(1, 0)
+  return T.expect(T.Table({ e.grid_position.x, e.grid_position.y }), T.Table({ 4, 5 }))
+end)
+
+T.it('creates entity and moves it west', function()
+  local p = Point(3, 5)
+  local e = Entity(p, "@")
+  e:move(-1, 0)
+  return T.expect(T.Table({ e.grid_position.x, e.grid_position.y }), T.Table({ 2, 5 }))
+end)
+
+T.it('creates entity and moves it north', function()
+  local p = Point(3, 5)
+  local e = Entity(p, "@")
+  e:move(0, -1)
+  return T.expect(T.Table({ e.grid_position.x, e.grid_position.y }), T.Table({ 3, 4 }))
+end)
+
+T.it('creates entity and moves it south', function()
+  local p = Point(3, 5)
+  local e = Entity(p, "@")
+  e:move(0, 1)
+  return T.expect(T.Table({ e.grid_position.x, e.grid_position.y }), T.Table({ 3, 6 }))
 end)
 
 T.run()
