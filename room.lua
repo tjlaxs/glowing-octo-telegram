@@ -18,11 +18,12 @@ function Room:center()
 end
 
 function Room:grow(size)
-  self.x1 = self.x1 - size
-  self.y1 = self.y1 - size
-  self.x2 = self.x2 + size
-  self.y2 = self.y2 + size
-  return self
+  local r = Room(0, 0, 0, 0)
+  r.x1 = self.x1 - size
+  r.y1 = self.y1 - size
+  r.x2 = self.x2 + size
+  r.y2 = self.y2 + size
+  return r
 end
 
 function Room:intersects(room)

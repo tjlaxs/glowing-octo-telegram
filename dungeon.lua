@@ -11,9 +11,9 @@ local Entity = require("entity")
 function Dungeon:new(w, h)
   self.super.new(self)
   self.map = nil
-  self.max_rooms = 5
-  self.room_min_size = 5
-  self.room_max_size = 10
+  self.max_rooms = 8
+  self.room_min_size = 4
+  self.room_max_size = 8
   self.player = Entity(Point(21, 16), "@")
   self.npc = Entity(Point(36, 16), "d")
   self:generate(w, h)
@@ -43,7 +43,6 @@ function Dungeon:generate(map_width, map_height)
       else
         self:tunnelBetween(rooms[table.maxn(rooms)]:center(), room:center())
       end
-      print("Room ", room.x1, room.y1, room.x2, room.y2)
       table.insert(rooms, room)
     end
   end
@@ -60,8 +59,8 @@ end
 
 function Dungeon:tunnelBetween(start, stop)
   if math.random() < 0.5 then
-    self:tunnelHorizontal(stop.x, start.y, stop.y)
-    self:tunnelVertical(stop.y, start.x, stop.x)
+    self:tunnelHorizontal(stop.y, stop.x, start.x)
+    self:tunnelVertical(start.x, stop.y, start.y)
   else
     self:tunnelHorizontal(start.y, start.x, stop.x)
     self:tunnelVertical(stop.x, start.y, stop.y)
