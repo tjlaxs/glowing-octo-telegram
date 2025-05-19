@@ -38,6 +38,53 @@ T.it('finds cells inside of walls', function()
   return T.expect(T.Table(list), T.Table({ 2, 2, 3, 2, 4, 2, 2, 3, 3, 3, 4, 3, 2, 4, 3, 4, 4, 4 }))
 end)
 
+T.it('grows room', function()
+  local r = Room(2, 2, 3, 3)
+  local g = r:grow(1)
+  return T.expect(T.Table({ g.x1, g.x2, g.y1, g.y2 }), T.Table({ 1, 6, 1, 6 }))
+end)
+
+T.it('shrinks room', function()
+  local r = Room(2, 2, 3, 3)
+  local g = r:grow(-1)
+  return T.expect(T.Table({ g.x1, g.x2, g.y1, g.y2 }), T.Table({ 3, 4, 3, 4 }))
+end)
+
+T.it('two distinct rooms dont intersect', function()
+  local r1 = Room(2, 2, 3, 3)
+  local r2 = Room(8, 8, 3, 3)
+  return T.expect(r1:intersects(r2), false)
+end)
+
+T.it('two overlapping rooms intersects 1', function()
+  local r1 = Room(2, 2, 3, 3)
+  local r2 = Room(3, 2, 3, 3)
+  return T.expect(r1:intersects(r2), true)
+end)
+
+T.it('two overlapping rooms intersects 2', function()
+  local r1 = Room(3, 2, 3, 3)
+  local r2 = Room(2, 2, 3, 3)
+  return T.expect(r1:intersects(r2), true)
+end)
+
+T.it('two overlapping rooms intersects 3', function()
+  local r1 = Room(2, 2, 3, 3)
+  local r2 = Room(2, 3, 3, 3)
+  return T.expect(r1:intersects(r2), true)
+end)
+
+T.it('two overlapping rooms intersects 4', function()
+  local r1 = Room(2, 3, 3, 3)
+  local r2 = Room(2, 2, 3, 3)
+  return T.expect(r1:intersects(r2), true)
+end)
+
+T.it('room intersects itself', function()
+  local r = Room(2, 3, 3, 3)
+  return T.expect(r:intersects(r), true)
+end)
+
 ------------------------------------------------------ Grid
 local Grid = require("grid")
 
