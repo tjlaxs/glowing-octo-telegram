@@ -4,6 +4,10 @@ M._tests = {}
 M._results = {}
 M._meta = { ok = 0, fail = 0, fails = {} }
 
+M.Table = function(t)
+  return table.concat(t, ', ')
+end
+
 M.Test = function(string, test)
   return { it = string, fun = test }
 end
@@ -38,7 +42,7 @@ M.run = function()
     print("Failed tests: " .. M._meta.fail .. result_string)
   else
     print("")
-    print("All tests success: " .. M._meta.ok .. result_string)
+    print("All tests ok: " .. M._meta.ok .. result_string)
   end
 end
 
