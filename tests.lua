@@ -18,15 +18,17 @@ local Room = require("room")
 
 T.it('creates room', function()
   local r = Room(1, 2, 3, 4)
-  return T.expect(T.Table({ r.x1, r.x2, r.y1, r.y2 }), T.Table({ 1, 1 + 3, 2, 2 + 4 }))
+  return T.expectSuperficial(r, { x1 = 1, x2 = 4, y1 = 2, y2 = 6 })
 end)
 
+-- TODO: test also rounding stuff and such
 T.it('finds room center', function()
   local r = Room(2, 2, 3, 3)
   local c = r:center()
-  return T.expect(T.Table({ c.x, c.y }), T.Table({ 3, 3 }))
+  return T.expectSuperficial(c, { x = 3, y = 3 })
 end)
 
+-- Note: expectSuperficial does not work here
 T.it('finds cells inside of walls', function()
   local r = Room(1, 1, 3, 3)
   local i = r:inner()
@@ -41,13 +43,13 @@ end)
 T.it('grows room', function()
   local r = Room(2, 2, 3, 3)
   local g = r:grow(1)
-  return T.expect(T.Table({ g.x1, g.x2, g.y1, g.y2 }), T.Table({ 1, 6, 1, 6 }))
+  return T.expectSuperficial(g, { x1 = 1, x2 = 6, y1 = 1, y2 = 6 })
 end)
 
 T.it('shrinks room', function()
   local r = Room(2, 2, 3, 3)
   local g = r:grow(-1)
-  return T.expect(T.Table({ g.x1, g.x2, g.y1, g.y2 }), T.Table({ 3, 4, 3, 4 }))
+  return T.expectSuperficial(g, { x1 = 3, x2 = 4, y1 = 3, y2 = 4 })
 end)
 
 T.it('two distinct rooms dont intersect', function()
