@@ -5,12 +5,12 @@ local Point = require("point")
 
 T.it('creates empty point', function()
   local p = Point()
-  return T.expect(T.Table({ p.x, p.y }), T.Table({ 0, 0 }))
+  return T.expectSuperficial(p, { x = 0, y = 0 })
 end)
 
 T.it('creates point', function()
   local p = Point(1, 2)
-  return T.expect(T.Table({ p.x, p.y }), T.Table({ 1, 2 }))
+  return T.expectSuperficial(p, { x = 1, y = 2 })
 end)
 
 ------------------------------------------------------ Room
