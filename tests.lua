@@ -1,4 +1,4 @@
-local T = require("test")
+local T = require("potential-octo-rotary-phone/test")
 
 ------------------------------------------------------ Point
 local Point = require("point")
