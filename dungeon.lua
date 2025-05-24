@@ -17,6 +17,9 @@ function Dungeon:new(w, h)
   self.player = Entity(Point(21, 16), "@")
   self.npc = Entity(Point(36, 16), "d")
   self:generate(w, h)
+
+  -- TODO: maybe an actual object called player
+  self.player.vision = 8 -- how far player sees
 end
 
 function Dungeon:generate(map_width, map_height)
@@ -94,7 +97,7 @@ function Dungeon:getTile(point)
 end
 
 function Dungeon:draw()
-  self.map:draw()
+  self.map:draw(self.player)
   self:entitiesDraw()
 end
 

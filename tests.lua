@@ -109,6 +109,41 @@ T.it('gets grid index for a point', function()
   return T.expect(index, 32)
 end)
 
+T.it('calculates disance of points on same x axis', function()
+  local p = { x = 7, y = 9 }
+  local q = { x = 7, y = 7 }
+  local distance = Grid.distance(p, q)
+  return T.expect(distance, 2)
+end)
+
+T.it('calculates disance of points on same y axis', function()
+  local p = { x = 9, y = 7 }
+  local q = { x = 7, y = 7 }
+  local distance = Grid.distance(p, q)
+  return T.expect(distance, 2)
+end)
+
+T.it('calculates disance of points in 1st quater', function()
+  local p = { x = 11, y = 11 }
+  local q = { x = 7, y = 8 }
+  local distance = Grid.distance(p, q)
+  return T.expect(distance, 5)
+end)
+
+T.it('calculates disance of points in 3rd quater', function()
+  local p = { x = -11, y = -11 }
+  local q = { x = -7, y = -8 }
+  local distance = Grid.distance(p, q)
+  return T.expect(distance, 5)
+end)
+
+T.it('calculates disance of points in 3rd quater', function()
+  local p = { x = 1, y = 1 }
+  local q = { x = 1, y = 1 }
+  local distance = Grid.distance(p, q)
+  return T.expect(distance, 0)
+end)
+
 ------------------------------------------------------ Entity
 local Entity = require("entity")
 
