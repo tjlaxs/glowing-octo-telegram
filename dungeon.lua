@@ -11,9 +11,9 @@ local Entity = require("entity")
 function Dungeon:new(w, h)
   self.super.new(self)
   self.map = nil
-  self.max_rooms = 8
-  self.room_min_size = 4
-  self.room_max_size = 8
+  self.max_rooms = 30
+  self.room_min_size = 6
+  self.room_max_size = 10
   self.player = Entity(Point(21, 16), "@")
   self.npc = Entity(Point(36, 16), "d")
   self:generate(w, h)
