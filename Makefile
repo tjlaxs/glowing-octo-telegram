@@ -1,5 +1,5 @@
 run:
-	love .
+	@love .
 
 test: tests.lua
-	lua tests.lua
+	@lua tests.lua

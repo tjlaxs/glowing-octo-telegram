@@ -1,0 +1,12 @@
+name: simple-lua-tests
+run-name: ${{ github.actor }} running simple-lua-tests
+on: [push]
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4 
+        with:
+          submodules: recursive
+      - run: sudo apt install -y lua5.4
+      - run: make test
