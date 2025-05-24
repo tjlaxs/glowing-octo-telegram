@@ -8,5 +8,6 @@ jobs:
       - uses: actions/checkout@v4 
         with:
           submodules: recursive
-      - run: sudo apt install -y lua5.4
+      - run: sudo apt-get update
+      - run: sudo apt-get install lua5.4
       - run: make test
