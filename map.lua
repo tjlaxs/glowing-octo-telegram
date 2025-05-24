@@ -26,12 +26,14 @@ function Map:inBounds(point)
   return 1 <= point.x <= self.width and 1 <= point.y <= self.height
 end
 
-function Map:draw()
+function Map:draw(player)
+  print('map:draw', player.grid_position.x, player.grid_position.y)
   for y = 1, self.height do
     for x = 1, self.width do
       local point = Point(x, y)
       local tile = self:getTile(point)
-      if tile then
+      local visible = Grid.distance(player.grid_position, point) < player.vision
+      if tile and visible then
         local world_point = Grid.toWorld(point)
         love.graphics.print({ tile.color_lit, tile.face }, world_point.x, world_point.y)
       end
