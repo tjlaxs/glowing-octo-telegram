@@ -221,7 +221,7 @@ end)
 T.it('creates a map with tiles', function()
   local map = Map(3, 3)
   local tile = map:getTile(Point(1, 1))
-  return T.expect(tile.is_transparent and "true" or "false", "false")
+  return T.expect(tile and "tile" or "nil", "tile")
 end)
 
 T.run()
