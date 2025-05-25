@@ -27,9 +27,12 @@ function Map:inBounds(point)
 end
 
 function Map:draw(player)
-  print('map:draw', player.grid_position.x, player.grid_position.y)
-  for y = 1, self.height do
-    for x = 1, self.width do
+  local x_from = player.grid_position.x - player.vision
+  local x_to = player.grid_position.x + player.vision
+  local y_from = player.grid_position.y - player.vision
+  local y_to = player.grid_position.y + player.vision
+  for y = y_from, y_to do
+    for x = x_from, x_to do
       local point = Point(x, y)
       local tile = self:getTile(point)
       local visible = Grid.distance(player.grid_position, point) < player.vision
