@@ -102,11 +102,39 @@ T.it('changes from world point to grid point', function()
   return T.expectSuperficial(gp, { x = 10, y = 10 })
 end)
 
-T.it('gets grid index for a point', function()
+T.it('gets grid index for a point 0 0', function()
+  local map_width = 10
+  local p = Point(0, 0)
+  local index = Grid.toIndex(map_width, p)
+  return T.expect(index, -10)
+end)
+
+T.it('gets grid index for a point 0 1', function()
+  local map_width = 10
+  local p = Point(0, 1)
+  local index = Grid.toIndex(map_width, p)
+  return T.expect(index, 0)
+end)
+
+T.it('gets grid index for a point 1 0', function()
+  local map_width = 10
+  local p = Point(1, 0)
+  local index = Grid.toIndex(map_width, p)
+  return T.expect(index, -9)
+end)
+
+T.it('gets grid index for a point 1 1', function()
+  local map_width = 10
+  local p = Point(1, 1)
+  local index = Grid.toIndex(map_width, p)
+  return T.expect(index, 1)
+end)
+
+T.it('gets grid index for a point 2 3', function()
   local map_width = 10
   local p = Point(2, 3)
   local index = Grid.toIndex(map_width, p)
-  return T.expect(index, 32)
+  return T.expect(index, 22)
 end)
 
 T.it('calculates disance of points on same x axis', function()
@@ -179,6 +207,21 @@ T.it('creates entity and moves it south', function()
   local e = Entity(p, "@")
   e:move(0, 1)
   return T.expectSuperficial(e.grid_position, { x = 3, y = 6 })
+end)
+
+------------------------------------------------------ Map
+local Map = require("map")
+
+T.it('creates a 1x1 map with a tile', function()
+  local map = Map(1, 1)
+  local tile = map:getTile(Point(1, 1))
+  return T.expect(tile and "tile" or "nil", "tile") -- TODO: update for potential-octo-rotary-phone needed
+end)
+
+T.it('creates a map with tiles', function()
+  local map = Map(3, 3)
+  local tile = map:getTile(Point(1, 1))
+  return T.expect(tile.is_transparent and "true" or "false", "false")
 end)
 
 T.run()

@@ -30,7 +30,7 @@ end
 Grid.toIndex = function(map_width, point)
   local px = point.x
   local py = point.y
-  return py * map_width + px
+  return (py - 1) * map_width + px
 end
 
 return Grid
